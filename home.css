@@ -336,3 +336,138 @@ form .btn input[type="submit"]{
   .categories:hover .dropdown-content {display: block;}
   
   .categories:hover .menu {background-color: #3e8e41;}
+  /* //////////////////////////////////////////////////////////////////////////////// */
+  /* FilterSection */
+  .filterDiv {
+    display: none;
+}
+.games a{
+    text-decoration: none;
+    color: #fff;
+}
+.card-body:hover{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.show {
+    display: block;
+}
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 1.5rem;
+
+}
+
+.news1 {
+    grid-area: 1 / 1 / 3 / 4;
+    background-image: url('../newsimgs/neuer-return.png');
+    height: 90%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center right;
+
+}
+
+.news2 {
+    grid-area: 1 / 4 / 3 / 7;
+    background-image: url('../newsimgs/cl-draw.jpg');
+    height: 90%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    
+}
+
+
+.club1 {
+    background-image: url('../newsimgs/gerdmuller.jpg');
+    height: 90% !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-bottom: -400px;
+}
+
+.club2 {
+    background-image: url('../newsimgs/president.jpg');
+    height: 90% !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-bottom: -400px;
+}
+
+.bundesliga1{
+    background-image: url('../newsimgs/nagelsmann.jpg');
+    height: 90%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-bottom: -100px;
+}
+
+.bundesliga2{
+    background-image: url('../newsimgs/interviews-neuer.jpg');
+    height: 90%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.champions1{
+    background-image: url('../newsimgs/cl-draw.jpg');
+    height: 90%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.champions2{
+    background-image: url('../newsimgs/davies-choupe.jpg');
+    height: 90%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.news3 {
+    grid-area: 3 / 1 / 5 / 3;
+}
+
+.news4 {
+    grid-area: 3 / 3 / 5 / 5;
+}
+
+.news5 {
+    grid-area: 3 / 5 / 5  / 7;
+}
+
+
+
+
+/* button */
+
+.filters {
+    color: #fff;
+    margin: 1rem 0;
+}
+
+.filters .btn {
+
+    color: #fff;
+    background-color: #1a273f;
+    border-radius: 2px;
+}
+
+.filters .btn.active {
+    background-color: #dc052d;
+    border: #dc052d;
+}
+
+.card-body {
+    background-color: #1a273f;
+    color: #fff;
+    padding: 1rem;
+}

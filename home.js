@@ -1,4 +1,4 @@
-filterSelection("news")
+filterSelection("games")
 function filterSelection(c) {
     let x, i;
     x = document.getElementsByClassName("filterDiv");
