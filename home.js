@@ -30,7 +30,6 @@ function RemoveClass(element, name) {
     }
     element.className = arr1.join(" ");
 }
-
 // Add active class to the current button (highlight it)
 let btnContainer = document.getElementById("myBtnContainer");
 let btns = btnContainer.getElementsByClassName("btn");
@@ -41,3 +40,35 @@ for (let i = 0; i < btns.length; i++) {
         this.className += " active";
     });
 }
+//////////////////////////////////////////////////////////////////////////////////////
+// Select all slides
+const slides = document.querySelectorAll(".slide");
+
+const nextSlide = document.querySelector(".btn-next");
+let curSlide = 0;
+let maxSlide = slides.length - 1;
+
+nextSlide.addEventListener("click", function () {
+  if (curSlide === maxSlide) {
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+
+  slides.forEach((slide, indx) => {
+    slide.style.transform = `translateX(${100 * (indx - curSlide)}%)`;
+  });
+});
+
+const prevSlide = document.querySelector(".btn-prev");
+
+prevSlide.addEventListener("click", function () {
+  if (curSlide === 0) {
+    curSlide = maxSlide;
+  } else {
+    curSlide--
+  }
+  slides.forEach((slide, indx) => {
+    slide.style.transform = `translateX(${100 * (indx - curSlide)}%)`;
+  });
+});
