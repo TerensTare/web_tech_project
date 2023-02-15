@@ -1,5 +1,6 @@
 <?php
 
+require_once 'utils/defs.php';
 require_once 'utils/session.php';
 
 ?>
