@@ -44,8 +44,8 @@ class GameList
             for ($i = 0; $i < $maxi; $i++) {
                 $game = $games[$j + $i];
 
-                $html .= "<div class='col-4'>";
-                $html .= "<div class='card'>";
+                $html .= "<div class='col-3'>";
+                $html .= "<div class='card rounded'>";
                 $html .= "<img src='games/{$game[GamesTable::FOLDER]}/icon.png' class='card-img-top' alt='...'>";
                 $html .= "<div class='card-body'>";
                 $html .= "<h5 class='card-title'>{$game[GamesTable::NAME]}</h5>";

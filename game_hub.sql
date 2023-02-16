@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS `game_hub`;
 CREATE TABLE IF NOT EXISTS `game_hub`.`users` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(31) NOT NULL UNIQUE,
-    `password` VARCHAR(31) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
     `email` VARCHAR(31) NOT NULL UNIQUE,
     `role` CHAR(1) NOT NULL,
     PRIMARY KEY (`id`)

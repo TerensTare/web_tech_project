@@ -22,14 +22,17 @@ abstract class Table
         $keys = array_map(fn($x) => "`$x`", array_keys($data));
         $keys = implode(", ", $keys);
 
-        $values = array_map(fn($x) => ":$x", $data);
+        $values = array_map(fn($x) => ":$x", array_keys($data));
         $values = implode(", ", $values);
 
         $stmt = "INSERT INTO `{$this->name()}` ($keys) VALUES ($values)";
         $query = $this->handle->prepare($stmt);
 
         $query->execute($data);
-        return $query->fetch();
+        $result = $query->fetch();
+        $query->closeCursor();
+
+        return $result;
     }
 
     public function find(array $data): array|false
@@ -44,7 +47,10 @@ abstract class Table
         $stmt = $this->handle->prepare($query);
         $stmt->execute($data);
 
-        return $stmt->fetch();
+        $result = $stmt->fetch();
+        $stmt->closeCursor();
+
+        return $result;
     }
 
     public function rows(): array
@@ -53,7 +59,10 @@ abstract class Table
         $query = $this->handle->prepare($stmt);
         $query->execute();
 
-        return $query->fetchAll();
+        $result = $query->fetchAll();
+        $query->closeCursor();
+
+        return $result;
     }
 }
 

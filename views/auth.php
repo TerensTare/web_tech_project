@@ -5,7 +5,7 @@ require_once __DIR__ . '/../utils/defs.php';
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>Authenticate</title>
@@ -31,9 +31,9 @@ require_once __DIR__ . '/../utils/defs.php';
                 <label for="chk" aria-hidden="true">Sign up</label>
                 <input type="hidden" name="kind" value="signup">
                 <input type="email" name="email" id="email" placeholder="user@mail.com" required>
-                <input type="text" name="user" class="user" pattern="<?= USERNAME_REGEX ?>" placeholder="Username"
+                <input type="text" name="s-username" id="s-username" pattern="<?= USERNAME_REGEX ?>" placeholder="Username"
                     required>
-                <input type="password" name="password" class="password" pattern="<?= PASSWORD_REGEX ?>"
+                <input type="password" name="s-password" id="s-password" pattern="<?= PASSWORD_REGEX ?>"
                     placeholder="Password" required>
 
                 <input type="submit" value="Signup" class="button">
@@ -42,13 +42,13 @@ require_once __DIR__ . '/../utils/defs.php';
         </div>
 
         <div class="login">
-            <form method="post" action="./controllers/users.php">
+            <form method="post" action="./controllers/user_login.php">
                 <input type="hidden" name="kind" value="login">
 
                 <label for="chk" aria-hidden="true">Login</label>
-                <input type="text" name="user" class="user" pattern="<?= USERNAME_REGEX ?>" placeholder="Username"
+                <input type="text" name="l-username" id="l-username" pattern="<?= USERNAME_REGEX ?>" placeholder="Username"
                     required>
-                <input type="password" name="password" class="password" pattern="<?= PASSWORD_REGEX ?>"
+                <input type="password" name="l-password" id="l-password" pattern="<?= PASSWORD_REGEX ?>"
                     placeholder="Password" required>
 
                 <input type="submit" value="Login" class="button">

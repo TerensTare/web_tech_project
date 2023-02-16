@@ -10,6 +10,9 @@ class UsersTable extends Table
     public const EMAIL = "email";
     public const ROLE = "role";
 
+    public const ROLE_USER = "u";
+    public const ROLE_ADMIN = "a";
+
     public function __construct(PDO $handle)
     {
         parent::__construct($handle);
