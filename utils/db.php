@@ -1,16 +1,18 @@
 <?php
 
-require_once './db/UsersTable.php';
+require_once 'models/db/games_table.php';
+require_once 'models/db/users_table.php';
 
 class Db
 {
     private const host = 'localhost';
-    private const name = 'gamehub';
+    private const name = 'game_hub';
     private const user = 'root';
-    private const pwd = '';
+    private const pwd = '18273645';
 
     private PDO $handle;
     private UsersTable $users;
+    private GamesTable $games;
 
     public static function self()
     {
@@ -21,6 +23,11 @@ class Db
     public function users()
     {
         return $this->users;
+    }
+
+    public function games()
+    {
+        return $this->games;
     }
 
     private function __construct()
@@ -35,6 +42,7 @@ class Db
         );
 
         $this->users = new UsersTable($this->handle);
+        $this->games = new GamesTable($this->handle);
     }
 }
 

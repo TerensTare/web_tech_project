@@ -1,0 +1,19 @@
+{
+    "explorer.fileNesting.patterns": {
+        "*.php": "${capture}.css, ${capture}.js"
+    },
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "GameHub",
+            "database": "game_hub",
+            "username": "root"
+        }
+    ]
+}

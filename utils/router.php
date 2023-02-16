@@ -36,11 +36,16 @@ class Router
 
     public function enter(string $path)
     {
-        if (array_key_exists($path, $this->routes)) {
-            $this->routes[$path]->enter();
-        } else {
-            $this->wildcard->enter();
+        foreach ($this->routes as $route => $handler) {
+            $sub = $route . "?";
+
+            if ($route === $path || strpos($path, $sub) === 0) {
+                $handler->enter();
+                return;
+            }
         }
+
+        $this->wildcard->enter();
     }
 
     public function default (Route $route)

@@ -2,10 +2,10 @@
 
 require_once 'utils/route.php';
 
-class HomeRoute extends Route
+class GameRoute extends Route
 {
     public function enter()
     {
-        require_once 'views/home.php';
+        require_once 'views/game.php';
     }
 }
