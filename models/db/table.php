@@ -19,22 +19,17 @@ abstract class Table
     // helper functions
     public function insert(array $data)
     {
-        $columns = $this->columns();
-        $columns = array_filter($columns, fn($col) => array_key_exists($col, $data));
-
-        $keys = array_map(fn($col) => "`$col`", $columns);
+        $keys = array_map(fn($x) => "`$x`", array_keys($data));
         $keys = implode(", ", $keys);
 
-        $values = array_map(function ($column) use ($data) {
-            return $this->handle->quote($data[$column]);
-        }, $columns);
-
+        $values = array_map(fn($x) => ":$x", $data);
         $values = implode(", ", $values);
 
         $stmt = "INSERT INTO `{$this->name()}` ($keys) VALUES ($values)";
         $query = $this->handle->prepare($stmt);
-        return $query->execute() === true
-            ? $query->fetch() : false;
+
+        $query->execute($data);
+        return $query->fetch();
     }
 
     public function find(array $data): array|false

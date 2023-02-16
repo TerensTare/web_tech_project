@@ -40,21 +40,20 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#">Recent</a></li>
                             <li><a class="dropdown-item" href="#">Puzzle</a></li>
-                            <li><a class="dropdown-item" href="#">Board Games</a></li>
-                            <li><a class="dropdown-item" href="#">Card Games</a></li>
+                            <li><a class="dropdown-item" href="#">Board</a></li>
+                            <li><a class="dropdown-item" href="#">Card</a></li>
                         </ul>
                     </li>
                 </ul>
+            </div>
 
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+            <form class="d-flex me-5">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
 
-                <div class="">
-                    <a href="#" class="btn btn-outline-secondary me-2">Log in</a>
-                    <a href="#" class="btn btn-outline-success">Sign Up</a>
-                </div>
+            <div class="">
+                <a href="/auth" class="btn btn-outline-secondary me-2">Profile</a>
             </div>
         </div>
     </nav>

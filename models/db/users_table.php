@@ -1,6 +1,6 @@
 <?php
 
-require_once 'models/db/table.php';
+require_once '../models/db/table.php';
 
 class UsersTable extends Table
 {
@@ -8,6 +8,7 @@ class UsersTable extends Table
     public const USERNAME = "username";
     public const PASSWORD = "password";
     public const EMAIL = "email";
+    public const ROLE = "role";
 
     public function __construct(PDO $handle)
     {
@@ -21,7 +22,7 @@ class UsersTable extends Table
 
     public function columns(): array
     {
-        return [self::ID, self::USERNAME, self::PASSWORD, self::EMAIL];
+        return [self::ID, self::USERNAME, self::PASSWORD, self::EMAIL, self::ROLE];
     }
 
     public function primary_key(): string

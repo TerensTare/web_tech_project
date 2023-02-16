@@ -1,6 +1,7 @@
 <?php
 
 require_once '../utils/db.php';
+require_once '../utils/defs.php';
 require_once '../utils/session.php';
 
 class Users
@@ -13,26 +14,29 @@ class Users
 
     private function sanitize(array $udata): array
     {
-        return array_map(fn($x) => htmlspecialchars($x), $udata);
+        return array_map(fn($x) => htmlspecialchars($data[$x]), $udata);
     }
 
-    public function signup($name, $email, $pwd)
+    public function signup(array $data)
     {
-        [$name, $email, $pwd] = $this->sanitize([$name, $email, $pwd]);
+        $data = $this->sanitize($data);
+        $name = $data[UsersTable::USERNAME];
+        $email = $data[UsersTable::EMAIL];
+        $pwd = $data[UsersTable::PASSWORD];
 
         if (!preg_match('/' . USERNAME_REGEX . '/', $name)) {
             Session::flash('signup', 'Invalid username');
-            Session::redirect('./signup.php');
+            Session::redirect('/auth');
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             Session::flash('signup', 'Invalid email');
-            Session::redirect('./signup.php');
+            Session::redirect('/auth');
         }
 
         if (!preg_match('/' . PASSWORD_REGEX . '/', $pwd)) {
             Session::flash('signup', 'Invalid password');
-            Session::redirect('./signup.php');
+            Session::redirect('/auth');
         }
 
         $pwd = password_hash($pwd, PASSWORD_DEFAULT);
@@ -40,7 +44,7 @@ class Users
         $ut = Db::self()->users();
         if ($ut->find([UsersTable::USERNAME => $name]) !== false) {
             Session::flash('signup', 'Username already exists');
-            Session::redirect('./signup.php');
+            Session::redirect('/auth');
         }
 
         $user = $ut->insert([
@@ -54,24 +58,29 @@ class Users
 
         $_SESSION['user'] = $user[UsersTable::ID];
 
-        Session::redirect('/');
+        if ($user[UsersTable::ROLE] == 'a')
+            Session::redirect('/admin');
+        else
+            Session::redirect('/');
     }
 
-    public function login($name, $pwd)
+    public function login(array $data)
     {
-        [$name, $pwd] = $this->sanitize([$name, $pwd]);
+        $data = $this->sanitize($data);
+        $name = $data[UsersTable::USERNAME];
+        $pwd = $data[UsersTable::PASSWORD];
 
         $ut = Db::self()->users();
         $user = $ut->find([UsersTable::USERNAME => $name]);
 
         if ($user === false) {
             Session::flash('login', 'Invalid username');
-            Session::redirect('/login');
+            Session::redirect('/auth');
         }
 
         if (!password_verify($pwd, $user[UsersTable::PASSWORD])) {
             Session::flash('login', 'Invalid password');
-            Session::redirect('/login');
+            Session::redirect('/auth');
         }
 
         session_start();
@@ -86,11 +95,11 @@ class Users
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     switch ($_POST['kind']) {
         case 'signup':
-            Users::self()->signup($_POST['user'], $_POST['email'], $_POST['password']);
+            Users::self()->signup($_POST);
             break;
 
         case 'login':
-            Users::self()->login($_POST['user'], $_POST['password']);
+            Users::self()->login($_POST);
             break;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
-require_once 'models/db/games_table.php';
-require_once 'models/db/users_table.php';
+require_once '../models/db/games_table.php';
+require_once '../models/db/users_table.php';
 
 class Db
 {
@@ -40,6 +40,10 @@ class Db
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]
         );
+
+        $query = file_get_contents("../game_hub.sql");
+        $stmt = $this->handle->prepare($query);
+        $stmt->execute();
 
         $this->users = new UsersTable($this->handle);
         $this->games = new GamesTable($this->handle);
