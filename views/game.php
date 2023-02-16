@@ -1,7 +1,7 @@
 <?php
 
-require_once 'utils/db.php';
-require_once 'utils/session.php';
+require_once __DIR__ . '/utils/db.php';
+require_once __DIR__ . '/utils/session.php';
 
 class GameView
 {

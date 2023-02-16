@@ -59,7 +59,7 @@
     </nav>
 
     <?php
-    require_once 'views/game_list.php';
+    require_once __DIR__ . '/game_list.php';
 
     GameList::display();
     ?>

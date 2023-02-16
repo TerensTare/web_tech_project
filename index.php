@@ -1,12 +1,12 @@
 <?php
 
-require_once 'utils/router.php';
+require_once __DIR__ . '/utils/router.php';
 // routes
-require_once 'routes/admin.php';
-require_once 'routes/auth.php';
-require_once 'routes/game.php';
-require_once 'routes/home.php';
-require_once 'routes/not_found.php';
+require_once __DIR__ . '/routes/admin.php';
+require_once __DIR__ . '/routes/auth.php';
+require_once __DIR__ . '/routes/game.php';
+require_once __DIR__ . '/routes/home.php';
+require_once __DIR__ . '/routes/not_found.php';
 
 
 $router = Router::create()

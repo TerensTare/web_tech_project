@@ -1,8 +1,8 @@
 <?php
 
-require_once '../utils/db.php';
-require_once '../utils/defs.php';
-require_once '../utils/session.php';
+require_once __DIR__ . '/../utils/db.php';
+require_once __DIR__ . '/../utils/defs.php';
+require_once __DIR__ . '/../utils/session.php';
 
 class Users
 {
@@ -14,7 +14,7 @@ class Users
 
     private function sanitize(array $udata): array
     {
-        return array_map(fn($x) => htmlspecialchars($data[$x]), $udata);
+        return array_map(fn($x) => htmlspecialchars($x), $udata);
     }
 
     public function signup(array $data)

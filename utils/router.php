@@ -1,6 +1,6 @@
 <?php
 
-require_once 'utils/route.php';
+require_once __DIR__ . '/route.php';
 
 class Router
 {

@@ -1,6 +1,6 @@
 <?php
 
-require_once '../models/db/table.php';
+require_once __DIR__ . '/table.php';
 
 class UsersTable extends Table
 {

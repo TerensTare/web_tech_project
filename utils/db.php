@@ -1,7 +1,7 @@
 <?php
 
-require_once '../models/db/games_table.php';
-require_once '../models/db/users_table.php';
+require_once __DIR__ . '/../models/db/games_table.php';
+require_once __DIR__ . '/../models/db/users_table.php';
 
 class Db
 {
@@ -41,7 +41,7 @@ class Db
             ]
         );
 
-        $query = file_get_contents("../game_hub.sql");
+        $query = file_get_contents(__DIR__ . "/../game_hub.sql");
         $stmt = $this->handle->prepare($query);
         $stmt->execute();
 
