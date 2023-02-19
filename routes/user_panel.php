@@ -2,11 +2,11 @@
 
 require_once __DIR__ . '/../utils/route.php';
 
-class HomeRoute extends Route
+class UserPanelRoute extends Route
 {
     public function enter()
     {
-        require_once __DIR__ . '/../views/home.php';
+        require_once __DIR__ . '/../views/user_panel.php';
     }
 }
 

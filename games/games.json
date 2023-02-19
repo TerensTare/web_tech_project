@@ -1,4 +1,20 @@
-{
-    "dots_n_boxes": "Dots and Boxes",
-    "snake": "Snake"
-}
+[
+    {
+        "name": "Dots and Boxes",
+        "folder": "dots_n_boxes",
+        "tags": [
+            "arcade",
+            "strategy",
+            "puzzle",
+            "board",
+            "multiplayer"
+        ]
+    },
+    {
+        "name": "Snake",
+        "folder": "snake",
+        "tags": [
+            "arcade"
+        ]
+    }
+]

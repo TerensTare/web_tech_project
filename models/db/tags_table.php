@@ -2,11 +2,10 @@
 
 require_once __DIR__ . '/table.php';
 
-class GamesTable extends Table
+class TagsTable extends Table
 {
     public const ID = "id";
     public const NAME = "name";
-    public const FOLDER = "folder";
 
     public function __construct(PDO $handle)
     {
@@ -15,12 +14,12 @@ class GamesTable extends Table
 
     public function name(): string
     {
-        return "games";
+        return "tags";
     }
 
     public function columns(): array
     {
-        return [self::ID, self::NAME, self::FOLDER];
+        return [self::ID, self::NAME];
     }
 
     public function primary_key(): string

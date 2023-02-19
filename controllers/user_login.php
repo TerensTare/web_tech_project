@@ -6,44 +6,51 @@ require_once __DIR__ . '/../utils/db.php';
 require_once __DIR__ . '/../utils/defs.php';
 require_once __DIR__ . '/../utils/session.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!isset($_POST['l-username']) || !isset($_POST['l-password'])) {
-        die('Invalid request.');
-    }
+// actual logic
+$__is_post = $_SERVER['REQUEST_METHOD'] == 'POST' or die('Only POST requests are allowed.');
 
-    $name = htmlspecialchars($_POST[UsersTable::USERNAME]);
-    $pwd = htmlspecialchars($_POST[UsersTable::PASSWORD]);
+$data = filter_login_data();
+
+if (is_string($data)) {
+    $_SESSION['message'] = '<div class="alert alert-danger" role="alert">' . $data . '!</div>';
+    Session::redirect('/auth');
+    exit;
+}
+
+session_regenerate_id(true);
+
+$_SESSION['auth'] = true;
+$_SESSION['id'] = $data[UsersTable::ID];
+
+if ($data[UsersTable::ROLE] === UsersTable::ROLE_ADMIN) {
+    $_SESSION['admin'] = true;
+    Session::redirect('/admin');
+} else {
+    Session::redirect('/');
+}
+
+// helpers
+function filter_login_data(): array|string
+{
+    $username = 'l-username';
+    $password = 'l-password';
+
+    if (!isset($_POST[$username]))
+        return 'Missing username';
+    if (!isset($_POST[$password]))
+        return 'Missing password';
+
+    $name = htmlspecialchars($_POST[$username]);
+    $pwd = htmlspecialchars($_POST[$password]);
 
     $user = Db::self()->users()->find([UsersTable::USERNAME => $name]);
 
-    if ($user === false) {
-        Session::flash('login', 'Invalid username');
-        Session::redirect('/auth');
-        die();
-    }
+    if ($user === false)
+        return "User doesn't exist";
 
-    if (!password_verify($pwd, $user[UsersTable::PASSWORD])) {
-        Session::flash('login', 'Invalid password');
-        Session::redirect('/auth');
-        die();
-    }
+    if (!password_verify($pwd, $user[UsersTable::PASSWORD]))
+        return 'Incorrect username or password';
 
-    session_regenerate_id();
-    $_SESSION['auth'] = true;
-    $_SESSION['user'] = $user[UsersTable::USERNAME];
-    $_SESSION['id'] = $user[UsersTable::ID];
-    $_SESSION['role'] = $user[UsersTable::ROLE];
-
-    if ($user[UsersTable::ROLE] == UsersTable::ROLE_ADMIN) {
-        Session::redirect('/admin');
-    } else {
-        Session::redirect('/');
-    }
-
-    die();
-
-} else {
-    die('Only POST requests are allowed.');
+    return $user;
 }
-
 ?>

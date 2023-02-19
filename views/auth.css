@@ -23,15 +23,6 @@ body {
     display: none;
 }
 
-.error {
-    background: #F2DEDE;
-    color: #0C0101;
-    padding: 10px;
-    width: 95%;
-    border-radius: 5px;
-    margin: 20px auto;
-}
-
 .signup {
     position: relative;
     width: 100%;
@@ -61,29 +52,35 @@ body {
 }
 
 input {
-    width: 60%;
-    height: 20px;
+    width: 70%;
+    height: 40px;
     background: #e0dede;
     justify-content: center;
     display: flex;
-    margin: 20px auto;
     padding: 10px;
     border: none;
     outline: none;
     border-radius: 5px;
 }
 
-.button {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    margin: 20px auto;
+}
+
+input[type="submit"],
+input[type="reset"] {
     width: 60%;
     height: 40px;
-    margin: 10px auto;
+    margin: 5px auto;
     justify-content: center;
     display: block;
     color: #fff;
     background: #1c034b;
     font-size: 1em;
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 10px;
     outline: none;
     border: none;
     border-radius: 5px;

@@ -1,22 +1,16 @@
 <?php
 
+if (!isset($_SESSION) || !isset($_SESSION['admin'])) {
+    header('Location: /404');
+}
+
 require_once __DIR__ . '/../utils/db.php';
 require_once __DIR__ . '/../utils/defs.php';
 require_once __DIR__ . '/../utils/session.php';
 
-if (!isset($_SESSION['auth']) || !$_SESSION['auth']) {
-    Session::redirect('/');
-    die();
-}
-
-if ($_SESSION['role'] != UsersTable::ROLE_ADMIN) {
-    Session::redirect('/');
-    die();
-}
-
 function user_table(): string
 {
-    $users = Db::self()->users()->rows();
+    $users = Db::self()->users()->filter([UsersTable::ROLE => UsersTable::ROLE_USER]);
 
     $html = <<<HTML
 <h2>Users</h2>
@@ -24,19 +18,24 @@ function user_table(): string
     <tr>
         <th>Username</th>
         <th>Email</th>
-        <th>Role</th>
+        <th>Actions</th>
     </tr>
 HTML;
 
-
-    foreach ($users as $user) {
-        $html .= <<<HTML
-    <tr>
+    if ($users !== false) {
+        foreach ($users as $user) {
+            $html .= <<<HTML
+    <tr class="user-data">
         <td>{$user[UsersTable::USERNAME]}</td>
         <td>{$user[UsersTable::EMAIL]}</td>
-        <td>{$user[UsersTable::ROLE]}</td>
+        <td>
+            <a href="/views/user_panel.php/?action=edit&id={$user[UsersTable::ID]}" title="Edit"><i class="fas fa-edit"></i></a>
+            <a href="/views/user_panel.php/?action=delete&id={$user[UsersTable::ID]}" title="Delete"><i class="fas fa-trash text-danger"></i></a>
+            <a href="/views/user_panel.php/?action=reset&id={$user[UsersTable::ID]}" title="Reset password"><i class="fas fa-key text-warning"></i></a>
+        </td>
     </tr>
 HTML;
+        }
     }
 
     $html .= "</table>";
@@ -53,15 +52,18 @@ function games_table(): string
 <table class="table table-bordered">
     <tr>
         <th>Name</th>
-        <th>Folder</th>
+        <th>Actions</th>
     </tr>
 HTML;
 
     foreach ($games as $game) {
         $html .= <<<HTML
-    <tr>
+    <tr class="game-data">
         <td>{$game[GamesTable::NAME]}</td>
-        <td>{$game[GamesTable::FOLDER]}</td>
+        <td>
+            <a href="/admin/user/?action=edit&id={$game[GamesTable::ID]}" title="Rename"><i class="fas fa-edit"></i></a>
+            <a href="/admin/user/?action=delete&id={$game[GamesTable::ID]}" title="Delete"><i class="fas fa-trash text-danger"></i></a>
+        </td>
     </tr>
 HTML;
     }
@@ -87,13 +89,17 @@ HTML;
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
     <title>GameHub Dashboard</title>
 </head>
 
 <body>
-    <?= user_table() ?>
-    <?= games_table() ?>
+    <?php
+    require_once __DIR__ . '/navbar.php';
+
+    echo Navbar::build();
+    echo user_table();
+    echo games_table();
+    ?>
 </body>
 
 </html>

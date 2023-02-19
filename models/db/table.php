@@ -2,7 +2,7 @@
 
 abstract class Table
 {
-    private PDO $handle;
+    protected PDO $handle;
 
     protected function __construct(PDO $handle)
     {
@@ -25,21 +25,45 @@ abstract class Table
         $values = array_map(fn($x) => ":$x", array_keys($data));
         $values = implode(", ", $values);
 
-        $stmt = "INSERT INTO `{$this->name()}` ($keys) VALUES ($values)";
+        $stmt = "INSERT INTO `{$this->name()}` ($keys) VALUES ($values);";
         $query = $this->handle->prepare($stmt);
-
         $query->execute($data);
-        $result = $query->fetch();
-        $query->closeCursor();
 
-        return $result;
+        return $this->find($data);
     }
 
-    public function find(array $data): array|false
+    public function replace(array $data)
+    {
+        $eq = array_map(fn($x) => "`$x` = :$x", array_keys($data));
+        $eq = implode(", ", $eq);
+
+        $id = $this->primary_key();
+        $stmt = "UPDATE `{$this->name()}` SET $eq WHERE `$id` = :$id;";
+        $query = $this->handle->prepare($stmt);
+        $query->execute($data);
+
+        return $this->find([$id => $data[$id]]);
+    }
+
+    public function delete(array $data): bool
     {
         $cond = implode(
             " AND ",
-            array_map(fn($key) => "$key = :$key", array_keys($data))
+            array_map(fn($key) => "`$key` = :$key", array_keys($data))
+        );
+
+        $query = "DELETE FROM `{$this->name()}` WHERE $cond;";
+        $stmt = $this->handle->prepare($query);
+        $stmt->execute($data);
+
+        return $stmt->rowCount() > 0;
+    }
+
+    public function filter(array $data): array|false
+    {
+        $cond = implode(
+            " AND ",
+            array_map(fn($key) => "`$key` = :$key", array_keys($data))
         );
 
         $query = "SELECT * FROM `{$this->name()}` WHERE $cond;";
@@ -47,22 +71,30 @@ abstract class Table
         $stmt = $this->handle->prepare($query);
         $stmt->execute($data);
 
-        $result = $stmt->fetch();
-        $stmt->closeCursor();
+        return $stmt->fetchAll();
+    }
 
-        return $result;
+    public function find(array $data): array|false
+    {
+        $cond = implode(
+            " AND ",
+            array_map(fn($key) => "`$key` = :$key", array_keys($data))
+        );
+
+        $query = "SELECT * FROM `{$this->name()}` WHERE $cond;";
+
+        $stmt = $this->handle->prepare($query);
+        $stmt->execute($data);
+
+        return $stmt->fetch();
     }
 
     public function rows(): array
     {
-        $stmt = "SELECT * FROM `{$this->name()}`";
-        $query = $this->handle->prepare($stmt);
+        $query = $this->handle->prepare("SELECT * FROM `{$this->name()}`");
         $query->execute();
 
-        $result = $query->fetchAll();
-        $query->closeCursor();
-
-        return $result;
+        return $query->fetchAll();
     }
 }
 

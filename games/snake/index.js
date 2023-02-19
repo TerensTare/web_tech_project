@@ -36,22 +36,7 @@ function render() {
 
     moveSnake();
     if (isGameOver()) {
-        ctx.fillStyle = 'white';
-        ctx.font = '50px Arial';
-        ctx.fillText('Game Over', canvas.width / 2 - 150, canvas.height / 2);
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                snake.head.x = 10;
-                snake.head.y = 10;
-                snake.body = [];
-                snake.direction.x = 0;
-                snake.direction.y = 0;
-                food.x = 5;
-                food.y = 5;
-                render();
-            }
-        }, { once: true });
+        drawGameOver();
         return;
     }
     checkIfEating();
@@ -137,6 +122,35 @@ function isGameOver() {
         }
     }
     return false;
+}
+
+function drawGameOver() {
+    ctx.fillStyle = 'white';
+
+    ctx.font = '50px Arial';
+    ctx.fillText('Game Over', canvas.width / 2 - 150, canvas.height / 2);
+
+    ctx.font = '20px Arial';
+    ctx.fillText('Score: ' + snake.body.length, canvas.width / 2 - 50, canvas.height / 2 + 25)
+
+    ctx.font = '20px Arial';
+    ctx.fillText('Press any key to restart', canvas.width / 2 - 120, canvas.height / 2 + 50);
+
+    document.addEventListener('keydown', function restart(e) {
+        if (e.key === 'Enter') {
+            snake.head.x = 10;
+            snake.head.y = 10;
+            snake.body = [];
+            snake.direction.x = 0;
+            snake.direction.y = 0;
+            food.x = 5;
+            food.y = 5;
+
+            document.removeEventListener('keydown', restart);
+
+            render();
+        }
+    });
 }
 
 function key_down(e) {
